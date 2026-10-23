@@ -1,0 +1,2260 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#2563eb">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:type" content="website">
+<meta property="og:title" content="VOYAGE — スマート旅行プランナー">
+<meta property="og:description" content="目的地・交通・宿・観光を選ぶだけで「旅のしおり」が完成！友だちと一緒に旅行計画を立てましょう。">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%232563eb'/%3E%3Ctext x='50' y='72' font-size='62' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3EV%3C/text%3E%3C/svg%3E">
+<title>VOYAGE — スマート旅行プランナー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f7fb;
+  --surface: #ffffff;
+  --surface-glass: rgba(255, 255, 255, 0.86);
+  --surface-muted: #f8fafc;
+  --text: #0f172a;
+  --text-sub: #475569;
+  --text-muted: #94a3b8;
+  --primary: #0ea5e9;
+  --primary-dark: #0284c7;
+  --primary-light: #e0f2fe;
+  --accent: #6366f1;
+  --accent-light: #e0e7ff;
+  --emerald: #10b981;
+  --emerald-light: #d1fae5;
+  --amber: #f59e0b;
+  --amber-light: #fef3c7;
+  --rose: #f43f5e;
+  --rose-light: #ffe4e6;
+  --border: #e2e8f0;
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 10px 30px -5px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 20px 40px -12px rgba(14, 165, 233, 0.18);
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  background-image:
+    radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.10) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.10) 0px, transparent 50%);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+/* Header & Hero */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  padding: 12px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  box-shadow: 0 6px 16px rgba(14, 165, 233, 0.3);
+}
+
+.brand-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  background: linear-gradient(135deg, #0f172a 0%, #0284c7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-sub {
+  font-size: 11px;
+  color: var(--text-sub);
+  display: block;
+  margin-top: -4px;
+}
+
+/* Stepper Navigation */
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-muted);
+  padding: 5px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
+
+.step-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--text-sub);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+
+.step-btn:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.step-btn.active {
+  background: linear-gradient(135deg, #0ea5e9 0%, #4f46e5 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.28);
+}
+
+.step-btn.completed:not(.active) {
+  color: var(--primary-dark);
+  background: var(--primary-light);
+}
+
+.step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(15, 23, 42, 0.08);
+}
+
+.step-btn.active .step-num {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-outline {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.btn-outline:hover {
+  border-color: var(--primary);
+  color: var(--primary-dark);
+  background: var(--primary-light);
+}
+
+.btn-primary {
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #0ea5e9 0%, #4f46e5 100%);
+  color: #fff;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 6px 18px rgba(14, 165, 233, 0.28);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(14, 165, 233, 0.38);
+}
+
+/* Main Layout */
+.layout {
+  max-width: 1380px;
+  margin: 24px auto 0;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Trip Config Bar */
+.trip-config-bar {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+.config-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.config-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-sub);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.config-input, .config-select {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface-muted);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.config-input:focus, .config-select:focus {
+  border-color: var(--primary);
+  background: #fff;
+}
+
+/* Step Section Header */
+.section-banner {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #0369a1 100%);
+  color: #fff;
+  padding: 24px 28px;
+  border-radius: var(--radius-lg);
+  margin-bottom: 22px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: var(--shadow-md);
+}
+
+.section-banner::after {
+  content: '';
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.35) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.section-banner h2 {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-banner p {
+  font-size: 13.5px;
+  color: #cbd5e1;
+}
+
+/* Filter Pills & Search */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.pill-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill {
+  padding: 7px 15px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-sub);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+
+.pill:hover {
+  border-color: var(--primary);
+  color: var(--primary-dark);
+}
+
+.pill.active {
+  background: var(--text);
+  color: #fff;
+  border-color: var(--text);
+}
+
+.search-box {
+  position: relative;
+  min-width: 240px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 9px 14px 9px 36px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+.search-box input:focus {
+  border-color: var(--primary);
+}
+
+.search-box .search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Destination Grid */
+.dest-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.dest-card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 2px solid transparent;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.dest-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.dest-card.selected {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-lg);
+}
+
+.dest-visual {
+  height: 165px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 14px;
+  color: #fff;
+}
+
+.dest-visual-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.45s ease;
+}
+
+.dest-card:hover .dest-visual-bg {
+  transform: scale(1.06);
+}
+
+.dest-visual-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.82) 0%, rgba(15, 23, 42, 0.15) 65%, transparent 100%);
+}
+
+.dest-region-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  background: rgba(15, 23, 42, 0.68);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.dest-selected-check {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.dest-card.selected .dest-selected-check {
+  display: flex;
+}
+
+.dest-title-wrap {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.dest-name {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dest-catch {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.dest-body {
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.dest-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: var(--surface-muted);
+  color: var(--text-sub);
+}
+
+.dest-meta {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-sub);
+}
+
+.dest-meta strong {
+  color: var(--primary-dark);
+  font-size: 14px;
+}
+
+/* Option Cards (Transport & Hotel & Sightseeing) */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 16px;
+}
+
+.option-card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border);
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+.option-card:hover {
+  border-color: #93c5fd;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.option-card.selected {
+  border-color: var(--primary);
+  background: linear-gradient(180deg, rgba(224, 242, 254, 0.35) 0%, #ffffff 100%);
+  box-shadow: var(--shadow-lg);
+}
+
+.option-badge {
+  position: absolute;
+  top: -11px;
+  right: 16px;
+  padding: 3px 11px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #0ea5e9, #6366f1);
+  box-shadow: 0 3px 8px rgba(14, 165, 233, 0.3);
+}
+
+.option-badge.fast { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+.option-badge.cheap { background: linear-gradient(135deg, #10b981, #059669); }
+
+.option-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.option-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.option-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.option-sub {
+  font-size: 12.5px;
+  color: var(--text-sub);
+  margin-top: 2px;
+}
+
+.option-specs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  background: var(--surface-muted);
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.spec-label {
+  font-size: 10.5px;
+  color: var(--text-muted);
+}
+
+.spec-val {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.option-foot {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.price-tag {
+  font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--primary-dark);
+}
+
+.price-unit {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-sub);
+}
+
+.select-indicator {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--surface-muted);
+  color: var(--text-sub);
+  transition: all 0.2s;
+}
+
+.option-card.selected .select-indicator {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Sub-section title */
+.sub-heading {
+  font-size: 16px;
+  font-weight: 800;
+  margin: 24px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+}
+
+/* Model Course Banner Cards */
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.course-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.course-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.course-card.active {
+  border-color: var(--accent);
+  background: linear-gradient(135deg, rgba(224, 231, 255, 0.45) 0%, #ffffff 100%);
+}
+
+/* Spot Cards */
+.spot-card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.2s;
+}
+
+.spot-card.selected {
+  border-color: var(--emerald);
+  background: linear-gradient(180deg, rgba(209, 250, 229, 0.3) 0%, #ffffff 100%);
+}
+
+.day-selector {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.day-chip {
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface-muted);
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--text-sub);
+}
+
+.day-chip.active {
+  background: var(--emerald);
+  color: #fff;
+  border-color: var(--emerald);
+}
+
+/* Right Sidebar Summary */
+.summary-sidebar {
+  position: sticky;
+  top: 80px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.summary-header {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+  color: #fff;
+  padding: 18px 20px;
+}
+
+.summary-header h3 {
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.summary-dest-preview {
+  margin-top: 8px;
+  font-size: 20px;
+  font-weight: 800;
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.summary-body {
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.summary-block {
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--border);
+}
+
+.summary-block-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.summary-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.summary-item-name {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.summary-item-price {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.summary-total-box {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%);
+  border-radius: 14px;
+  padding: 14px 16px;
+  border: 1px solid #bae6fd;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.total-amount {
+  font-family: 'Outfit', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--primary-dark);
+}
+
+.per-person-row {
+  font-size: 12px;
+  color: var(--text-sub);
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+/* Timeline / Itinerary View */
+.timeline-day {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  padding: 20px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-sm);
+}
+
+.timeline-day-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--primary-light);
+}
+
+.day-badge {
+  background: linear-gradient(135deg, #0ea5e9, #4f46e5);
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.timeline-list {
+  position: relative;
+  padding-left: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.timeline-list::before {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: #cbd5e1;
+}
+
+.timeline-node {
+  position: relative;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.timeline-node::before {
+  content: '';
+  position: absolute;
+  left: -22px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px var(--primary-light);
+}
+
+.step-nav-footer {
+  margin-top: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+/* Custom Form Box */
+.custom-add-box {
+  background: var(--surface);
+  border: 1px dashed #94a3b8;
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #0f172a;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: all 0.25s ease;
+  z-index: 999;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Modal for Saved Plans */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  padding: 20px;
+}
+
+.modal-backdrop.open {
+  display: flex;
+}
+
+.modal-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  max-width: 600px;
+  width: 100%;
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+@media (max-width: 1024px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .summary-sidebar {
+    position: static;
+  }
+  .trip-config-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .app-header {
+    flex-wrap: wrap;
+  }
+}
+
+
+/* ===== スマホ・LINEアプリ内ブラウザ対応 ===== */
+html,body{max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+img{max-width:100%;height:auto;}
+@media (max-width: 640px) {
+  .app-header{padding-left:12px;padding-right:12px;gap:10px;}
+  .stepper{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;}
+  .step-btn{white-space:nowrap;flex:0 0 auto;}
+  .layout{padding-left:12px;padding-right:12px;}
+  .trip-config-bar{grid-template-columns:1fr;}
+  .config-select,.config-input{font-size:16px;min-width:0;width:100%;}
+  .step-nav-footer{flex-wrap:wrap;}
+  .step-nav-footer > button{flex:1 1 100%;justify-content:center;}
+  .modal-card{padding:16px;}
+  .modal-card [style*="justify-content:space-between"]{flex-wrap:wrap;}
+}
+
+@media print {
+  .app-header, .trip-config-bar, .step-nav-footer, .header-actions, .custom-add-box {
+    display: none !important;
+  }
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  body {
+    background: #fff;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="brand">
+    <div class="brand-logo">V</div>
+    <div>
+      <span class="brand-title">VOYAGE PLANNER</span>
+      <span class="brand-sub">目的地から選ぶスマート旅行デザイン</span>
+    </div>
+  </div>
+
+  <nav class="stepper" id="stepperNav">
+    <button class="step-btn active" onclick="goToStep(1)">
+      <span class="step-num">1</span> 目的地を選ぶ
+    </button>
+    <button class="step-btn" onclick="goToStep(2)">
+      <span class="step-num">2</span> 交通手段
+    </button>
+    <button class="step-btn" onclick="goToStep(3)">
+      <span class="step-num">3</span> 宿泊先
+    </button>
+    <button class="step-btn" onclick="goToStep(4)">
+      <span class="step-num">4</span> 観光プラン
+    </button>
+    <button class="step-btn" onclick="goToStep(5)">
+      <span class="step-num">5</span> 旅のしおり
+    </button>
+  </nav>
+
+  <div class="header-actions">
+    <button class="btn-outline" onclick="openSavedModal()">📁 保存済みプラン</button>
+    <button class="btn-outline" onclick="saveCurrentPlan()">💾 保存</button>
+  </div>
+</header>
+
+<div class="layout">
+  <!-- Main Interactive Column -->
+  <main>
+    <!-- Global Trip Settings Bar -->
+    <section class="trip-config-bar">
+      <div class="config-item">
+        <label class="config-label">📍 出発地</label>
+        <select class="config-select" id="originSelect" onchange="onConfigChange()">
+          <option value="東京">東京（羽田・東京駅）</option>
+          <option value="大阪">大阪（伊丹・新大阪）</option>
+          <option value="名古屋">名古屋（中部・名古屋駅）</option>
+          <option value="福岡">福岡（福岡空港・博多駅）</option>
+          <option value="札幌">札幌（新千歳・札幌駅）</option>
+        </select>
+      </div>
+      <div class="config-item">
+        <label class="config-label">📅 出発日</label>
+        <input type="date" class="config-input" id="departDate" onchange="onConfigChange()">
+      </div>
+      <div class="config-item">
+        <label class="config-label">🌙 泊数・日程</label>
+        <select class="config-select" id="nightsSelect" onchange="onConfigChange()">
+          <option value="0">日帰り（0泊1日）</option>
+          <option value="1">1泊2日</option>
+          <option value="2" selected>2泊3日</option>
+          <option value="3">3泊4日</option>
+          <option value="4">4泊5日</option>
+        </select>
+      </div>
+      <div class="config-item">
+        <label class="config-label">👥 大人人数</label>
+        <select class="config-select" id="adultsSelect" onchange="onConfigChange()">
+          <option value="1">1名（ひとり旅）</option>
+          <option value="2" selected>2名（ペア・夫婦）</option>
+          <option value="3">3名（グループ）</option>
+          <option value="4">4名（ファミリー・仲間）</option>
+          <option value="5">5名以上</option>
+        </select>
+      </div>
+      <div class="config-item">
+        <label class="config-label">✨ 旅のスタイル</label>
+        <select class="config-select" id="styleSelect" onchange="onConfigChange()">
+          <option value="standard">バランス重視（王道）</option>
+          <option value="luxury">ラグジュアリー・癒やし</option>
+          <option value="Active">アクティブ・体験重視</option>
+          <option value="budget">コスパ・賢く旅する</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Dynamic Step Container -->
+    <div id="stepContent"></div>
+  </main>
+
+  <!-- Sticky Right Live Summary & Budget Calculator -->
+  <aside class="summary-sidebar">
+    <div class="summary-header">
+      <h3>
+        <span>🧳 現在のプラン概要</span>
+        <span id="summaryDaysBadge" style="font-size:12px;background:rgba(255,255,255,0.18);padding:3px 10px;border-radius:999px;">2泊3日</span>
+      </h3>
+      <div class="summary-dest-preview" id="summaryDestName">📍 京都・嵐山</div>
+      <div style="font-size:12px;color:#cbd5e1;margin-top:2px;" id="summaryRouteText">東京発 ・ 大人2名</div>
+    </div>
+
+    <div class="summary-body">
+      <div class="summary-block">
+        <div class="summary-block-title">
+          <span>🚄 往復交通手段</span>
+          <a href="#" role="button" onclick="event.preventDefault();goToStep(2)" style="color:var(--primary);text-decoration:none;">変更</a>
+        </div>
+        <div class="summary-item-row">
+          <span class="summary-item-name" id="sumTransportName">未選択</span>
+          <span class="summary-item-price" id="sumTransportPrice">¥0</span>
+        </div>
+        <div class="summary-item-row" style="margin-top:4px;font-size:12px;color:var(--text-sub);">
+          <span id="sumLocalTransportName">現地移動: 公共交通フリーパス</span>
+          <span id="sumLocalTransportPrice">¥0</span>
+        </div>
+      </div>
+
+      <div class="summary-block">
+        <div class="summary-block-title">
+          <span>🏨 宿泊先</span>
+          <a href="#" role="button" onclick="event.preventDefault();goToStep(3)" style="color:var(--primary);text-decoration:none;">変更</a>
+        </div>
+        <div class="summary-item-row">
+          <span class="summary-item-name" id="sumHotelName">未選択</span>
+          <span class="summary-item-price" id="sumHotelPrice">¥0</span>
+        </div>
+        <div style="font-size:11.5px;color:var(--text-sub);margin-top:2px;" id="sumHotelSub"></div>
+      </div>
+
+      <div class="summary-block">
+        <div class="summary-block-title">
+          <span>🗺️ 観光・グルメ・体験</span>
+          <a href="#" role="button" onclick="event.preventDefault();goToStep(4)" style="color:var(--primary);text-decoration:none;">変更</a>
+        </div>
+        <div id="sumSpotsList" style="display:flex;flex-direction:column;gap:5px;max-height:150px;overflow-y:auto;"></div>
+      </div>
+
+      <div class="summary-total-box">
+        <div class="total-row">
+          <span style="font-size:12.5px;font-weight:700;color:var(--text-sub);">概算合計（全員分）</span>
+          <span class="total-amount" id="sumTotalAmount">¥0</span>
+        </div>
+        <div class="per-person-row">
+          <span>1名あたり目安</span>
+          <strong id="sumPerPersonAmount" style="color:var(--text);font-size:14px;">¥0 / 人</strong>
+        </div>
+      </div>
+
+      <button class="btn-primary" style="width:100%;justify-content:center;" onclick="goToStep(5)">
+        📖 完成した「旅のしおり」を見る
+      </button>
+    </div>
+  </aside>
+</div>
+
+<!-- Saved Plans Modal -->
+<div class="modal-backdrop" id="savedModal" onclick="if(event.target===this)closeSavedModal()">
+  <div class="modal-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <h3 style="font-size:18px;font-weight:800;">📁 保存済みの旅行プラン</h3>
+      <button class="btn-outline" onclick="closeSavedModal()">✕ 閉じる</button>
+    </div>
+    <div id="savedPlansContainer" style="display:flex;flex-direction:column;gap:10px;"></div>
+  </div>
+</div>
+
+<div class="toast" id="toastMsg">保存しました</div>
+
+<script>
+(function(){try{var k='__t';localStorage.setItem(k,'1');localStorage.removeItem(k);}catch(e){
+  var m={};try{Object.defineProperty(window,'localStorage',{value:{getItem:function(k){return k in m?m[k]:null},setItem:function(k,v){m[k]=String(v)},removeItem:function(k){delete m[k]}}});}catch(_){}
+}})();
+function __copyFallback(t){var a=document.createElement('textarea');a.value=t;a.setAttribute('readonly','');a.style.position='fixed';a.style.top='-1000px';document.body.appendChild(a);a.select();a.setSelectionRange(0,t.length);var ok=false;try{ok=document.execCommand('copy');}catch(e){}document.body.removeChild(a);return ok;}
+</script>
+<script>
+// ==========================================
+// Rich Curated Destination Database
+// ==========================================
+const DESTINATIONS = [
+  {
+    id: 'kyoto',
+    name: '京都・嵐山＆東山',
+    region: '関西',
+    emoji: '⛩️',
+    catch: '千年の古都で寺社・庭園と京懐石を味わう雅な旅',
+    tags: ['歴史・文化', 'グルメ満喫', '温泉・癒やし', '紅葉・桜'],
+    gradient: 'linear-gradient(135deg, #7c2d12 0%, #b91c1c 50%, #f59e0b 100%)',
+    image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=900&q=80',
+    bestSeason: '通年（春・秋が特におすすめ）',
+    avgBudget: '¥45,000〜',
+    transports: [
+      { id: 'kyoto-shinkansen-nozomi', icon: '🚄', name: '東海道新幹線「のぞみ」指定席', sub: '最も本数が多く快適・京都駅直結', duration: '約2時間15分', freq: '10分間隔', price: 28340, badge: '一番人気', badgeType: 'rec' },
+      { id: 'kyoto-shinkansen-green', icon: '✨', name: '東海道新幹線 グリーン車往復', sub: 'ゆったり広い座席で贅沢な移動時間', duration: '約2時間15分', freq: '10分間隔', price: 38200, badge: '快適重視', badgeType: 'fast' },
+      { id: 'kyoto-flight-itami', icon: '✈️', name: '飛行機（伊丹空港）＋リムジンバス', sub: 'マイル活用や遠方からのアクセスに便利', duration: '約2時間30分', freq: '30分間隔', price: 26800, badge: '', badgeType: '' },
+      { id: 'kyoto-bus-premium', icon: '🚌', name: 'プレミアム夜行高速バス（3列独立）', sub: '朝から現地を満喫できるコスパ重視プラン', duration: '約7時間30分', freq: '毎日運行', price: 11800, badge: '最安コスパ', badgeType: 'cheap' }
+    ],
+    localTransports: [
+      { id: 'kyoto-local-subway', name: '地下鉄・バス1日乗車券パス', price: 1100, desc: '市内の主要観光地を網羅' },
+      { id: 'kyoto-local-taxi', name: '観光貸切タクシー（4時間コース）', price: 12000, desc: '混雑知らずで効率よく名所巡り' },
+      { id: 'kyoto-local-cycle', name: '電動アシストレンタサイクル', price: 2200, desc: '鴨川沿いや路地裏カフェ巡りに最適' }
+    ],
+    hotels: [
+      { id: 'kyoto-hotel-ryokan', icon: '♨️', name: '嵐山温泉 花筏亭（露天風呂付客室）', area: '嵐山・渡月橋エリア', meal: '1泊2食付（特選京懐石）', rating: '★ 4.9', pricePerNight: 34000, features: ['天然嵐山温泉', '桂川ビュー', '部屋食対応'], badge: '憧れの宿' },
+      { id: 'kyoto-hotel-boutique', icon: '🏨', name: 'THE THOUSAND KYOTO（ザ・サウザンド）', area: '京都駅・東山エリア', meal: '和洋ビュッフェ朝食付', rating: '★ 4.7', pricePerNight: 21500, features: ['駅徒歩2分', '大浴場・スパ', 'デザイナーズ空間'], badge: '人気No.1' },
+      { id: 'kyoto-hotel-machiya', icon: '🏮', name: '京町家スイート 祇園白川（一棟貸し）', area: '祇園・東山エリア', meal: '仕出し朝食バスケット付', rating: '★ 4.8', pricePerNight: 18500, features: ['坪庭ビュー', '檜風呂', 'プライベート空間'], badge: '隠れ家' },
+      { id: 'kyoto-hotel-smart', icon: '🛏️', name: 'ホテルビスタプレミオ京都 河原町', area: '四条河原町エリア', meal: '素泊まり（周辺グルメ充実）', rating: '★ 4.4', pricePerNight: 10800, features: ['繁華街すぐ', 'コスパ抜群', 'バス・トイレ別'], badge: '高コスパ' }
+    ],
+    courses: [
+      { id: 'kyoto-course-classic', name: '🍁 王道・古都の名所コンプリート', desc: '清水寺・伏見稲荷・嵐山竹林を巡る鉄板コース', spotIds: ['kyoto-s1', 'kyoto-s2', 'kyoto-s3', 'kyoto-s4', 'kyoto-s5'] },
+      { id: 'kyoto-course-relax', name: '🍵 大人の癒やし・庭園と甘味巡り', desc: '苔庭・宇治抹茶アフタヌーンティー・川床料理', spotIds: ['kyoto-s2', 'kyoto-s3', 'kyoto-s5', 'kyoto-s6'] },
+      { id: 'kyoto-course-gourmet', name: '🥢 京グルメ＆食べ歩き満喫コース', desc: '錦市場・湯豆腐・先斗町ディナーを堪能', spotIds: ['kyoto-s1', 'kyoto-s3', 'kyoto-s4', 'kyoto-s6'] }
+    ],
+    spots: [
+      { id: 'kyoto-s1', day: 1, time: '10:30', category: '名所・絶景', name: '伏見稲荷大社（千本鳥居）', duration: '90分', price: 0, desc: '朱色の鳥居が連なる神秘的な参道を散策' },
+      { id: 'kyoto-s2', day: 1, time: '14:00', category: '歴史・文化', name: '清水寺 ＆ 二年坂・三年坂食べ歩き', duration: '120分', price: 1500, desc: '清水の舞台からの絶景と石畳の茶屋街巡り' },
+      { id: 'kyoto-s3', day: 1, time: '18:30', category: 'グルメ', name: '先斗町・鴨川納涼床で京懐石ディナー', duration: '120分', price: 8500, desc: '旬の京野菜と湯葉・鱧料理を堪能' },
+      { id: 'kyoto-s4', day: 2, time: '09:30', category: '絶景・自然', name: '嵐山 竹林の小径 ＆ 天龍寺庭園', duration: '120分', price: 1000, desc: '朝の静かな竹林と世界遺産の曹源池庭園' },
+      { id: 'kyoto-s5', day: 2, time: '13:30', category: '体験', name: '嵯峨野トロッコ列車 ＆ 保津川遊船', duration: '120分', price: 4800, desc: '渓谷美を駆け抜けるレトロ列車とスリル満点の舟下り' },
+      { id: 'kyoto-s6', day: 3, time: '11:00', category: 'グルメ・買物', name: '錦市場食べ歩き ＆ 老舗茶舗で抹茶パフェ', duration: '120分', price: 3200, desc: '京の台所でだし巻き卵・生麩・抹茶スイーツを満喫' }
+    ]
+  },
+  {
+    id: 'hokkaido',
+    name: '北海道・札幌＆小樽・富良野',
+    region: '北海道・東北',
+    emoji: '❄️',
+    catch: '極上海鮮グルメと雄大な大地・ノスタルジックな運河の街',
+    tags: ['グルメ満喫', '絶景・自然', '温泉・癒やし'],
+    gradient: 'linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #38bdf8 100%)',
+    image: 'https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?auto=format&fit=crop&w=900&q=80',
+    bestSeason: '6〜9月（新緑・ラベンダー）/ 12〜2月（雪景色・味覚）',
+    avgBudget: '¥52,000〜',
+    transports: [
+      { id: 'hkd-flight-std', icon: '✈️', name: 'JAL / ANA 新千歳空港 往復便', sub: '手荷物20kg無料・Wi-Fi完備の快適フライト', duration: '約1時間35分', freq: '30分間隔', price: 32800, badge: 'おすすめ', badgeType: 'rec' },
+      { id: 'hkd-flight-classj', icon: '🥂', name: 'ファースト / プレミアムクラス往復', sub: '専用ラウンジ＆機内食付きで優雅な空の旅', duration: '約1時間35分', freq: '1時間間隔', price: 54000, badge: '贅沢空間', badgeType: 'fast' },
+      { id: 'hkd-flight-lcc', icon: '🛫', name: 'LCC（Peach / Jetstar）往復', sub: '移動費を抑えて現地グルメを豪華に！', duration: '約1時間40分', freq: '1日6便', price: 16800, badge: '最安コスパ', badgeType: 'cheap' }
+    ],
+    localTransports: [
+      { id: 'hkd-local-rentacar', name: 'コンパクトレンタカー（免責補償込）', price: 7500, desc: '富良野・積丹・美瑛まで自由自在にドライブ' },
+      { id: 'hkd-local-jr', name: 'JR北海道 札幌・小樽フリーパス', price: 2900, desc: '空港〜札幌〜小樽を快速エアポートで快適移動' }
+    ],
+    hotels: [
+      { id: 'hkd-hotel-onsen', icon: '♨️', name: '定山渓温泉 翠山亭倶楽部（展望露天風呂付）', area: '札幌・定山渓温泉', meal: '1泊2食付（毛ガニ・和牛会席）', rating: '★ 4.8', pricePerNight: 29800, features: ['源泉かけ流し', '無料送迎バス', 'ラウンジ酒類無料'], badge: '極上温泉' },
+      { id: 'hkd-hotel-city', icon: '🏨', name: 'JRタワーホテル日航札幌', area: '札幌駅直結', meal: '地上150mパノラマ朝食ビュッフェ付', rating: '★ 4.7', pricePerNight: 22000, features: ['天然温泉スパ併設', '海鮮イクラ盛り放題朝食', '夜景ビュー'], badge: '人気No.1' },
+      { id: 'hkd-hotel-otaru', icon: '🕯️', name: '小樽運河の宿 ふる川（レトロモダン）', area: '小樽運河目の前', meal: '北海道海鮮朝食付', rating: '★ 4.6', pricePerNight: 16500, features: ['運河ビュー', '貸切温泉あり', 'ガス灯散策に最適'], badge: '雰囲気抜群' }
+    ],
+    courses: [
+      { id: 'hkd-course-gourmet', name: '🦀 北海道三大グルメ＆小樽ロマン旅', desc: 'ウニ・イクラ海鮮丼、ジンギスカン、小樽運河クルーズ', spotIds: ['hkd-s1', 'hkd-s2', 'hkd-s3', 'hkd-s4', 'hkd-s6'] },
+      { id: 'hkd-course-nature', name: '🌻 富良野・美瑛の絶景ドライブ＆夜景', desc: '青い池・ファーム富田・藻岩山ロープウェイ', spotIds: ['hkd-s1', 'hkd-s4', 'hkd-s5', 'hkd-s6'] }
+    ],
+    spots: [
+      { id: 'hkd-s1', day: 1, time: '12:00', category: 'グルメ', name: '二条市場で特選ウニ・イクラ海鮮丼ランチ', duration: '75分', price: 3800, desc: '朝どれの濃厚エゾバフンウニと宝石のようなイクラ' },
+      { id: 'hkd-s2', day: 1, time: '15:00', category: '絶景・体験', name: '小樽運河クルーズ ＆ 北一硝子・オルゴール堂', duration: '150分', price: 2500, desc: '歴史的石造倉庫群を船上から眺めるロマンチック体験' },
+      { id: 'hkd-s3', day: 1, time: '19:00', category: 'グルメ', name: 'サッポロビール園 生ラムジンギスカン食べ比べ', duration: '120分', price: 5200, desc: '赤レンガ開拓使館で味わう直送ビールと極上生ラム' },
+      { id: 'hkd-s4', day: 2, time: '10:30', category: '絶景・自然', name: '美瑛「白金青い池」＆ ファーム富田の花畑', duration: '180分', price: 1500, desc: 'コバルトブルーに輝く神秘の池と彩りの丘' },
+      { id: 'hkd-s5', day: 2, time: '19:30', category: '絶景', name: '藻岩山ロープウェイ（日本新三大夜景）', duration: '90分', price: 2100, desc: '標高531mから見渡す煌めく札幌の大パノラマ' },
+      { id: 'hkd-s6', day: 3, time: '11:00', category: 'グルメ・お土産', name: '白い恋人パーク ＆ 新千歳空港ラーメン道場', duration: '120分', price: 2800, desc: '限定スイーツ体験と北海道名店ラーメンの締めくくり' }
+    ]
+  },
+  {
+    id: 'okinawa',
+    name: '沖縄・本島リゾート＆美ら海',
+    region: '九州・沖縄',
+    emoji: '🌺',
+    catch: 'エメラルドグリーンの海と南国ラグジュアリーリゾート',
+    tags: ['リゾート・ビーチ', '絶景・自然', 'グルメ満喫'],
+    gradient: 'linear-gradient(135deg, #0d9488 0%, #06b6d4 50%, #3b82f6 100%)',
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80',
+    bestSeason: '4〜10月（マリンシーズン）/ 冬も温暖でホエールウォッチング人気',
+    avgBudget: '¥55,000〜',
+    transports: [
+      { id: 'oki-flight-std', icon: '✈️', name: '那覇空港 直行便（JAL / ANA）', sub: '午前発・夕刻帰着のたっぷり滞在便', duration: '約2時間45分', freq: '1時間間隔', price: 34500, badge: 'おすすめ', badgeType: 'rec' },
+      { id: 'oki-flight-lcc', icon: '🌴', name: 'LCC・ソラシドエア 早期割プラン', sub: '浮いた予算でオーシャンビューホテルへアップグレード', duration: '約2時間50分', freq: '1日5便', price: 18900, badge: '最安コスパ', badgeType: 'cheap' },
+      { id: 'oki-flight-first', icon: '🥂', name: 'プレミアムクラス往復（那覇ラウンジ付）', sub: '優先搭乗・ゆったりシートでリゾート気分を先取り', duration: '約2時間45分', freq: '1日8便', price: 56000, badge: 'ラグジュアリー', badgeType: 'fast' }
+    ],
+    localTransports: [
+      { id: 'oki-local-car', name: 'オープンカー / SUVレンタカー', price: 9500, desc: '古宇利大橋や海岸線を爽快ドライブ' },
+      { id: 'oki-local-compact', name: 'ハイブリッドレンタカー（ガソリン代節約）', price: 5800, desc: '美ら海水族館から南部まで快適移動' },
+      { id: 'oki-local-bus', name: 'ゆいレール＆美ら海シャトルバスパス', price: 4200, desc: '運転なしでも主要リゾートを満喫' }
+    ],
+    hotels: [
+      { id: 'oki-hotel-luxury', icon: '🏖️', name: 'ハレクラニ沖縄（恩納村オーシャンフロント）', area: '恩納村リゾートエリア', meal: '極上リゾート朝食ビュッフェ付', rating: '★ 4.9', pricePerNight: 38000, features: ['プライベートビーチ', 'インフィニティプール', '全室オーシャンビュー'], badge: '最高峰リゾート' },
+      { id: 'oki-hotel-resort', icon: '🌺', name: 'オリオンホテル モトブ リゾート＆スパ', area: '本部・美ら海水族館隣', meal: '沖縄食材ビュッフェ朝食付', rating: '★ 4.7', pricePerNight: 21800, features: ['エメラルドビーチ目の前', '天然温泉大浴場', '伊江島ビュー'], badge: '人気No.1' },
+      { id: 'oki-hotel-naha', icon: '🍹', name: 'ホテルアクアチッタナハ（ルーフトッププール付）', area: '那覇・国際通り徒歩圏', meal: '地中海＆沖縄朝食付', rating: '★ 4.5', pricePerNight: 11500, features: ['シースループール', 'バーラウンジ', '離島フェリー港すぐ'], badge: '高コスパ' }
+    ],
+    courses: [
+      { id: 'oki-course-blue', name: '🐬 美ら海ブルー＆絶景ドライブ王道コース', desc: '古宇利大橋・美ら海水族館・青の洞窟シュノーケル', spotIds: ['oki-s1', 'oki-s2', 'oki-s3', 'oki-s4', 'oki-s5'] },
+      { id: 'oki-course-chill', name: '🌅 サンセットカフェ＆島時間リラックス', desc: 'ウミカジテラス・アメリカンビレッジ・アグー豚ディナー', spotIds: ['oki-s1', 'oki-s3', 'oki-s4', 'oki-s6'] }
+    ],
+    spots: [
+      { id: 'oki-s1', day: 1, time: '12:30', category: '絶景・カフェ', name: '瀬長島ウミカジテラスでタコライス＆海カフェ', duration: '90分', price: 2200, desc: '那覇空港近く・白亜のテラスから碧い海を一望' },
+      { id: 'oki-s2', day: 1, time: '15:30', category: '体験', name: '恩納村「青の洞窟」シュノーケリング体験', duration: '120分', price: 5500, desc: '神秘的な青い光に包まれる感動の海中体験' },
+      { id: 'oki-s3', day: 1, time: '19:00', category: 'グルメ', name: '琉球古民家で味わう「アグー豚しゃぶしゃぶ」＆島唄ライブ', duration: '120分', price: 6500, desc: '甘みあふれるやんばる島豚と海ぶどう・泡盛を堪能' },
+      { id: 'oki-s4', day: 2, time: '10:30', category: '名所・絶景', name: '沖縄美ら海水族館 ＆ 備瀬のフクギ並木', duration: '180分', price: 2180, desc: '巨大ジンベエザメが泳ぐ黒潮の海と癒やしの緑のトンネル' },
+      { id: 'oki-s5', day: 2, time: '15:00', category: '絶景ドライブ', name: '古宇利大橋ドライブ ＆ ハートロック・古宇利オーシャンタワー', duration: '90分', price: 1500, desc: '海の上を走る爽快な約2kmの絶景ブリッジ' },
+      { id: 'oki-s6', day: 3, time: '11:30', category: '買物・グルメ', name: '北谷アメリカンビレッジ ＆ 国際通りステーキランチ', duration: '150分', price: 3800, desc: 'カラフルな海辺の街散策と本場沖縄ステーキ' }
+    ]
+  },
+  {
+    id: 'hakone',
+    name: '箱根・芦ノ湖＆強羅温泉',
+    region: '関東・甲信越',
+    emoji: '♨️',
+    catch: '都心から90分！富士山を望む絶景露天風呂とアートの街',
+    tags: ['温泉・癒やし', '絶景・自然', '歴史・文化'],
+    gradient: 'linear-gradient(135deg, #065f46 0%, #059669 50%, #10b981 100%)',
+    image: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=900&q=80',
+    bestSeason: '通年（新緑・紅葉・冬の澄んだ富士山）',
+    avgBudget: '¥32,000〜',
+    transports: [
+      { id: 'hak-romance', icon: '🚆', name: '小田急ロマンスカー GSE（展望席・指定席）', sub: '大きな窓から車窓を楽しみながら箱根湯本へ直行', duration: '約1時間25分', freq: '30分間隔', price: 4940, badge: '一番人気', badgeType: 'rec' },
+      { id: 'hak-shinkansen', icon: '🚄', name: '東海道新幹線（小田原駅）＋箱根登山鉄道', sub: '関西・東海方面や東京駅から最速アクセス', duration: '約55分', freq: '15分間隔', price: 7200, badge: '最速ルート', badgeType: 'fast' },
+      { id: 'hak-highwaybus', icon: '🚌', name: '小田急ハイウェイバス（桃源台・仙石原直行）', sub: '芦ノ湖・仙石原エリアへ乗り換えなしでダイレクト', duration: '約2時間10分', freq: '30分間隔', price: 4200, badge: '最安コスパ', badgeType: 'cheap' }
+    ],
+    localTransports: [
+      { id: 'hak-local-freepass', name: '箱根フリーパス（登山電車・ロープウェイ・海賊船乗り放題）', price: 5000, desc: '箱根ゴールデンコースを制覇する必須パス' },
+      { id: 'hak-local-car', name: 'レンタカー（芦ノ湖スカイラインドライブ）', price: 6500, desc: '富士山パノラマロードを自由に巡る' }
+    ],
+    hotels: [
+      { id: 'hak-hotel-luxury', icon: '♨️', name: '強羅花壇 / 天悠（全室温泉露天風呂付）', area: '強羅温泉エリア', meal: '1泊2食付（相模湾の旬魚と和牛懐石）', rating: '★ 4.9', pricePerNight: 35000, features: ['渓谷インフィニティ露天', '源泉かけ流し', '送迎あり'], badge: '極上の癒やし' },
+      { id: 'hak-hotel-ashinoko', icon: '🗻', name: '山のホテル（芦ノ湖畔・富士山ビュー）', area: '元箱根・芦ノ湖エリア', meal: '本格フレンチまたは和懐石2食付', rating: '★ 4.8', pricePerNight: 26000, features: ['芦ノ湖一望', '広大なツツジ庭園', '自家源泉温泉'], badge: '絶景リゾート' },
+      { id: 'hak-hotel-yumoto', icon: '🏮', name: '箱根湯本温泉 天成園', area: '箱根湯本エリア', meal: 'ライブキッチン朝夕ビュッフェ付', rating: '★ 4.5', pricePerNight: 16800, features: ['全長17m天空大露天風呂', '庭園の滝', 'コスパ抜群'], badge: '大人気' }
+    ],
+    courses: [
+      { id: 'hak-course-golden', name: '🚡 箱根ゴールデンコース＆富士山絶景', desc: '大涌谷ロープウェイ・芦ノ湖海賊船・箱根神社', spotIds: ['hak-s1', 'hak-s2', 'hak-s3', 'hak-s4', 'hak-s5'] },
+      { id: 'hak-course-art', name: '🎨 美術館めぐり＆温泉カフェで大人の休日', desc: '彫刻の森・ガラスの森・足湯ベーカリーカフェ', spotIds: ['hak-s1', 'hak-s4', 'hak-s5', 'hak-s6'] }
+    ],
+    spots: [
+      { id: 'hak-s1', day: 1, time: '11:00', category: 'アート・自然', name: '彫刻の森美術館 ＆ ステンドグラス塔', duration: '120分', price: 2000, desc: '箱根の山々を背景にした野外アートと源泉足湯' },
+      { id: 'hak-s2', day: 1, time: '14:00', category: '絶景・体験', name: '箱根ロープウェイで大涌谷へ（名物・黒たまご）', duration: '90分', price: 1500, desc: '噴煙立ち上る大迫力の火口谷と富士山の大パノラマ' },
+      { id: 'hak-s3', day: 2, time: '10:00', category: '体験・絶景', name: '箱根海賊船 芦ノ湖クルーズ', duration: '60分', price: 1200, desc: '湖上から望む富士山と箱根神社の赤い平和の鳥居' },
+      { id: 'hak-s4', day: 2, time: '11:30', category: '歴史・パワースポット', name: '箱根神社・九頭龍神社 参拝', duration: '75分', price: 0, desc: '樹齢800年の杉並木と湖畔に佇む神秘の鳥居' },
+      { id: 'hak-s5', day: 2, time: '13:30', category: 'グルメ・カフェ', name: 'Bakery & Table 箱根（芦ノ湖畔の足湯テラスランチ）', duration: '75分', price: 2400, desc: '芦ノ湖を眺めながら足湯で味わう焼きたてパンとシチュー' },
+      { id: 'hak-s6', day: 3, time: '11:00', category: 'アート・買物', name: '箱根ガラスの森美術館 ＆ 箱根湯本食べ歩き', duration: '120分', price: 2800, desc: 'ヴェネチアン・グラスの煌めく庭園と温泉まんじゅう巡り' }
+    ]
+  },
+  {
+    id: 'kanazawa',
+    name: '金沢・兼六園＆加賀温泉郷',
+    region: '東海・北陸',
+    emoji: '🦀',
+    catch: '日本海の極上海鮮・金箔文化と茶屋街の風情を楽しむ美の街',
+    tags: ['グルメ満喫', '歴史・文化', '温泉・癒やし'],
+    gradient: 'linear-gradient(135deg, #92400e 0%, #d97706 50%, #fbbf24 100%)',
+    image: 'https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&w=900&q=80',
+    bestSeason: '通年（11〜3月は加能ガニ・寒ブリの旬！）',
+    avgBudget: '¥42,000〜',
+    transports: [
+      { id: 'knz-kagayaki', icon: '🚄', name: '北陸新幹線「かがやき」指定席往復', sub: '乗り換えなしで金沢駅へ最速ダイレクト', duration: '約2時間28分', freq: '1時間間隔', price: 28760, badge: '一番人気', badgeType: 'rec' },
+      { id: 'knz-granclass', icon: '🥂', name: '北陸新幹線「グランクラス」往復', sub: '専任アテンダント・軽食＆ドリンク飲み放題の最高峰シート', duration: '約2時間28分', freq: '1時間間隔', price: 54000, badge: '最上級体験', badgeType: 'fast' },
+      { id: 'knz-flight', icon: '✈️', name: '小松空港 往復便＋リムジンバス', sub: '早割利用でお得に空の旅', duration: '約2時間15分', freq: '1日6便', price: 22400, badge: 'お得便', badgeType: 'cheap' }
+    ],
+    localTransports: [
+      { id: 'knz-local-bus', name: '城下まち金沢周遊バス1日フリー乗車券', price: 800, desc: '兼六園・茶屋街・21世紀美術館をぐるっと周遊' },
+      { id: 'knz-local-taxi', name: '加賀温泉郷＆金沢 貸切観光タクシー', price: 9800, desc: '山代・山中温泉まで足を延ばす快適プラン' }
+    ],
+    hotels: [
+      { id: 'knz-hotel-kaga', icon: '♨️', name: '山代温泉 べにや無何有 / 界 加賀', area: '加賀温泉郷エリア', meal: '1泊2食付（活カニ・のどぐろ会席）', rating: '★ 4.9', pricePerNight: 33000, features: ['全室露天風呂付', '九谷焼の器', '伝統芸能鑑賞'], badge: '名湯の宿' },
+      { id: 'knz-hotel-hyatt', icon: '🏨', name: 'ハイアット セントリック 金沢', area: '金沢駅西口すぐ', meal: '加賀食材のブッフェ朝食付', rating: '★ 4.8', pricePerNight: 21000, features: ['アート空間', 'ルーフトップバー', '観光拠点に最適'], badge: '人気No.1' },
+      { id: 'knz-hotel-korinkon', icon: '🍵', name: '三井ガーデンホテル金沢（兼六園展望大浴場）', area: '近江町市場・香林坊徒歩圏', meal: '能登豚しゃぶしゃぶ朝食付', rating: '★ 4.6', pricePerNight: 13800, features: ['最上階大浴場', '金箔デザイン', '高コスパ'], badge: '高評価' }
+    ],
+    courses: [
+      { id: 'knz-course-gold', name: '✨ 金沢三名園＆近江町市場・茶屋街コース', desc: '兼六園・ひがし茶屋街・のどぐろ寿司＆21世紀美術館', spotIds: ['knz-s1', 'knz-s2', 'knz-s3', 'knz-s4', 'knz-s5'] }
+    ],
+    spots: [
+      { id: 'knz-s1', day: 1, time: '11:30', category: 'グルメ', name: '近江町市場で「のどぐろ炙り＆香箱ガニ海鮮丼」', duration: '90分', price: 4200, desc: '金沢市民の台所で味わう日本海の極上ネタ' },
+      { id: 'knz-s2', day: 1, time: '14:00', category: '名所・庭園', name: '日本三名園「兼六園」＆ 金沢城公園', duration: '120分', price: 820, desc: '徽軫灯籠と四季折々の美しさが広がる大名庭園' },
+      { id: 'knz-s3', day: 1, time: '16:30', category: '歴史・カフェ', name: 'ひがし茶屋街散策 ＆ 金箔ソフト・加賀棒茶カフェ', duration: '90分', price: 1800, desc: '紅殻格子の町並みで輝く金箔一貼りスイーツ体験' },
+      { id: 'knz-s4', day: 2, time: '10:00', category: 'アート', name: '金沢21世紀美術館（スイミング・プール）', duration: '120分', price: 1200, desc: '体験型現代アートが楽しめる円形ガラス建築の美術館' },
+      { id: 'knz-s5', day: 2, time: '14:00', category: '歴史・文化', name: '長町武家屋敷跡（野村家庭園）＆ 九谷焼絵付け体験', duration: '120分', price: 3200, desc: '土塀が続く静かな石畳と伝統工芸づくり' }
+    ]
+  },
+  {
+    id: 'fukuoka',
+    name: '福岡・博多＆糸島・別府温泉',
+    region: '九州・沖縄',
+    emoji: '🍜',
+    catch: '屋台・もつ鍋・明太子の美食天国と糸島の絶景海岸ドライブ',
+    tags: ['グルメ満喫', 'リゾート・ビーチ', '温泉・癒やし'],
+    gradient: 'linear-gradient(135deg, #be123c 0%, #e11d48 50%, #fb7185 100%)',
+    image: 'https://images.unsplash.com/photo-1554797589-7241bb691973?auto=format&fit=crop&w=900&q=80',
+    bestSeason: '通年（グルメ＆糸島カフェは年中快適）',
+    avgBudget: '¥44,000〜',
+    transports: [
+      { id: 'fuk-flight-std', icon: '✈️', name: '福岡空港 往復便（博多駅まで地下鉄5分！）', sub: '日本一都心に近い空港で到着後すぐ観光スタート', duration: '約1時間50分', freq: '15分間隔', price: 29800, badge: '圧倒的便利', badgeType: 'rec' },
+      { id: 'fuk-shinkansen', icon: '🚄', name: '山陽・東海道新幹線「のぞみ」博多往復', sub: '関西・中国地方からのアクセスに最適', duration: '約2時間30分〜', freq: '15分間隔', price: 27500, badge: '駅直結', badgeType: 'fast' },
+      { id: 'fuk-lcc', icon: '🛫', name: 'LCC早割便（福岡空港往復）', sub: '交通費を節約して博多名物グルメ三昧！', duration: '約1時間55分', freq: '1日8便', price: 15800, badge: '最安コスパ', badgeType: 'cheap' }
+    ],
+    localTransports: [
+      { id: 'fuk-local-car', name: '糸島・太宰府ドライブ用レンタカー', price: 6200, desc: '桜井二見ヶ浦や糸島カフェ巡りに必須' },
+      { id: 'fuk-local-subway', name: '福岡市地下鉄＆西鉄太宰府散策きっぷ', price: 2100, desc: '博多・天神・太宰府をスマートに移動' }
+    ],
+    hotels: [
+      { id: 'fuk-hotel-luxury', icon: '🏨', name: 'ザ・リッツ・カールトン福岡 / 都ホテル博多', area: '天神・博多駅直結', meal: '九州食材のラグジュアリー朝食付', rating: '★ 4.9', pricePerNight: 29500, features: ['屋上温泉スパ＆プール', '絶景ルーフトップ', '駅直結'], badge: '憧れホテル' },
+      { id: 'fuk-hotel-nakasu', icon: '🏮', name: '三井ガーデンホテル福岡中洲', area: '中洲・天神エリア', meal: '博多名物（明太子・もつ鍋・水炊き）朝食付', rating: '★ 4.7', pricePerNight: 16200, features: ['最上階大浴場', '屋台街徒歩3分', '朝食が高評価'], badge: '人気No.1' },
+      { id: 'fuk-hotel-itoshima', icon: '🌊', name: '糸島オーシャンビューヴィラ（サウナ付）', area: '糸島エリア', meal: '糸島豚＆海鮮BBQディナー付', rating: '★ 4.8', pricePerNight: 21000, features: ['プライベートサウナ', 'サンセットビーチ目の前'], badge: 'リゾート体験' }
+    ],
+    courses: [
+      { id: 'fuk-course-gourmet', name: '🍲 博多屋台・もつ鍋＆糸島絶景カフェ巡り', desc: '太宰府天満宮・糸島夫婦岩・中洲屋台はしご', spotIds: ['fuk-s1', 'fuk-s2', 'fuk-s3', 'fuk-s4', 'fuk-s5'] }
+    ],
+    spots: [
+      { id: 'fuk-s1', day: 1, time: '11:30', category: '歴史・グルメ', name: '太宰府天満宮 参拝 ＆ 焼きたて梅ヶ枝餅', duration: '120分', price: 1200, desc: '学問の神様と隈研吾デザインのスタバ・参道食べ歩き' },
+      { id: 'fuk-s2', day: 1, time: '18:30', category: 'グルメ', name: '老舗「博多もつ鍋」または「水炊き」＆ 中洲屋台はしご', duration: '150分', price: 6500, desc: 'ぷるぷる和牛もつ鍋と那珂川沿いの屋台でとんこつラーメン' },
+      { id: 'fuk-s3', day: 2, time: '10:30', category: '絶景・リゾート', name: '糸島「桜井二見ヶ浦（夫婦岩）」＆ ヤシの木ブランコ', duration: '120分', price: 1500, desc: '白い鳥居と青い海が広がるフォトジェニックな海岸線' },
+      { id: 'fuk-s4', day: 2, time: '13:00', category: 'グルメ・カフェ', name: '糸島カキ小屋 / 海鮮丼ランチ ＆ またいちの塩プリン', duration: '90分', price: 3200, desc: '玄界灘の海の幸と絶品花塩プリン' },
+      { id: 'fuk-s5', day: 3, time: '11:00', category: 'グルメ・買物', name: '柳橋連合市場 ＆ 博多駅デパ地下お土産ハンティング', duration: '120分', price: 3000, desc: 'できたて生明太子や博多通りもんをお買い物' }
+    ]
+  }
+];
+
+// ==========================================
+// Application State
+// ==========================================
+let state = {
+  currentStep: 1,
+  regionFilter: 'すべて',
+  tagFilter: 'すべて',
+  searchQuery: '',
+  origin: '東京',
+  departDate: '',
+  nights: 2,
+  adults: 2,
+  style: 'standard',
+  selectedDestId: 'kyoto',
+  selectedTransportId: 'kyoto-shinkansen-nozomi',
+  selectedLocalTransportId: 'kyoto-local-subway',
+  selectedHotelId: 'kyoto-hotel-boutique',
+  selectedCourseId: 'kyoto-course-classic',
+  selectedSpots: [] // Array of spot objects with day assignment
+};
+
+// Initialize default date (next Saturday)
+function initDefaultDate() {
+  const d = new Date();
+  d.setDate(d.getDate() + 14);
+  state.departDate = d.toISOString().split('T')[0];
+  document.getElementById('departDate').value = state.departDate;
+}
+
+function getCurrentDest() {
+  return DESTINATIONS.find(d => d.id === state.selectedDestId) || DESTINATIONS[0];
+}
+
+// ==========================================
+// Destination Selection & Reset Defaults
+// ==========================================
+function selectDestination(destId, moveNext = false) {
+  state.selectedDestId = destId;
+  const dest = getCurrentDest();
+  state.selectedTransportId = dest.transports[0].id;
+  state.selectedLocalTransportId = dest.localTransports[0].id;
+  state.selectedHotelId = dest.hotels[0].id;
+  state.selectedCourseId = dest.courses[0].id;
+  // Clone default spots
+  state.selectedSpots = dest.spots.map(s => ({ ...s }));
+  updateSummary();
+  if (moveNext) {
+    goToStep(2);
+    showToast(`📍 「${dest.name}」を選択しました！交通手段を選びましょう`);
+  } else {
+    renderStep();
+  }
+}
+
+function onConfigChange() {
+  state.origin = document.getElementById('originSelect').value;
+  state.departDate = document.getElementById('departDate').value;
+  state.nights = parseInt(document.getElementById('nightsSelect').value, 10);
+  state.adults = parseInt(document.getElementById('adultsSelect').value, 10);
+  state.style = document.getElementById('styleSelect').value;
+  updateSummary();
+  renderStep();
+}
+
+function goToStep(step) {
+  state.currentStep = step;
+  const btns = document.querySelectorAll('#stepperNav .step-btn');
+  btns.forEach((btn, idx) => {
+    const s = idx + 1;
+    btn.classList.toggle('active', s === step);
+    btn.classList.toggle('completed', s < step);
+  });
+  renderStep();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ==========================================
+// Step Rendering
+// ==========================================
+function renderStep() {
+  const container = document.getElementById('stepContent');
+  const dest = getCurrentDest();
+
+  if (state.currentStep === 1) {
+    renderStep1Destinations(container);
+  } else if (state.currentStep === 2) {
+    renderStep2Transport(container, dest);
+  } else if (state.currentStep === 3) {
+    renderStep3Hotel(container, dest);
+  } else if (state.currentStep === 4) {
+    renderStep4Sightseeing(container, dest);
+  } else if (state.currentStep === 5) {
+    renderStep5Itinerary(container, dest);
+  }
+}
+
+// STEP 1: Destination Picker
+function renderStep1Destinations(container) {
+  const regions = ['すべて', '北海道・東北', '関東・甲信越', '東海・北陸', '関西', '九州・沖縄'];
+  const tags = ['すべて', '温泉・癒やし', 'グルメ満喫', '絶景・自然', '歴史・文化', 'リゾート・ビーチ'];
+
+  const filtered = DESTINATIONS.filter(d => {
+    const matchRegion = state.regionFilter === 'すべて' || d.region === state.regionFilter;
+    const matchTag = state.tagFilter === 'すべて' || d.tags.includes(state.tagFilter);
+    const q = state.searchQuery.trim().toLowerCase();
+    const matchSearch = !q || d.name.toLowerCase().includes(q) || d.catch.toLowerCase().includes(q) || d.tags.some(t => t.includes(q));
+    return matchRegion && matchTag && matchSearch;
+  });
+
+  container.innerHTML = `
+    <div class="section-banner">
+      <div>
+        <h2>🌏 Step 1. 旅の目的地を選びましょう</h2>
+        <p>行きたいエリアや気分を選ぶと、最適な交通手段・人気宿・モデル観光コースが自動で提案されます。</p>
+      </div>
+      <button class="btn-primary" onclick="goToStep(2)">次へ：交通手段を選ぶ →</button>
+    </div>
+
+    <div class="filter-bar">
+      <div class="pill-group">
+        ${regions.map(r => `
+          <button class="pill ${state.regionFilter === r ? 'active' : ''}" onclick="setRegionFilter('${r}')">${r}</button>
+        `).join('')}
+      </div>
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" placeholder="都市名・キーワードで検索..." value="${state.searchQuery}" oninput="setSearchQuery(this.value)">
+      </div>
+    </div>
+
+    <div class="pill-group" style="margin-bottom:18px;">
+      <span style="font-size:12px;font-weight:700;color:var(--text-sub);align-self:center;margin-right:4px;">✨ テーマ絞り込み:</span>
+      ${tags.map(t => `
+        <button class="pill ${state.tagFilter === t ? 'active' : ''}" onclick="setTagFilter('${t}')">${t}</button>
+      `).join('')}
+    </div>
+
+    <div class="dest-grid">
+      ${filtered.map(d => {
+        const isSel = d.id === state.selectedDestId;
+        return `
+          <article class="dest-card ${isSel ? 'selected' : ''}" onclick="selectDestination('${d.id}', true)">
+            <div class="dest-visual" style="background:${d.gradient}">
+              <div class="dest-visual-bg" style="background-image:url('${d.image}')"></div>
+              <div class="dest-visual-overlay"></div>
+              <span class="dest-region-badge">${d.region}</span>
+              <div class="dest-selected-check">✓</div>
+              <div class="dest-title-wrap">
+                <div class="dest-name">${d.emoji} ${d.name}</div>
+                <div class="dest-catch">${d.catch}</div>
+              </div>
+            </div>
+            <div class="dest-body">
+              <div class="dest-tags">
+                ${d.tags.map(t => `<span class="tag">#${t}</span>`).join('')}
+              </div>
+              <div style="font-size:12px;color:var(--text-sub);">🗓️ ベストシーズン: ${d.bestSeason}</div>
+              <div class="dest-meta">
+                <span>2泊3日目安: <strong>${d.avgBudget}</strong></span>
+                <span style="color:var(--primary-dark);font-weight:700;">${isSel ? '選択中 ✓' : 'この目的地で組む →'}</span>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('')}
+    </div>
+
+    <div class="custom-add-box">
+      <span style="font-weight:700;font-size:13px;">💡 リストにない目的地を追加：</span>
+      <input type="text" id="customDestName" class="config-input" style="max-width:220px;" placeholder="例：軽井沢・草津、伊勢志摩、ハワイ">
+      <input type="text" id="customDestCatch" class="config-input" style="max-width:280px;" placeholder="旅のテーマ（例：高原リゾートと食べ歩き）">
+      <button class="btn-outline" onclick="addCustomDestination()">＋ オリジナル目的地を作成</button>
+    </div>
+  `;
+}
+
+function setRegionFilter(r) { state.regionFilter = r; renderStep(); }
+function setTagFilter(t) { state.tagFilter = t; renderStep(); }
+function setSearchQuery(q) { state.searchQuery = q; renderStep(); }
+
+// STEP 2: Transportation
+function renderStep2Transport(container, dest) {
+  container.innerHTML = `
+    <div class="section-banner">
+      <div>
+        <h2>🚄 Step 2. 「${state.origin}」から「${dest.name}」への交通手段</h2>
+        <p>所要時間・快適さ・ご予算に合わせて、往復のメイン移動手段と現地の足を選択してください。</p>
+      </div>
+      <button class="btn-primary" onclick="goToStep(3)">次へ：宿泊先を選ぶ →</button>
+    </div>
+
+    <div class="sub-heading">✈️ 往復メイン交通手段（1名あたり往復料金）</div>
+    <div class="options-grid">
+      ${dest.transports.map(t => {
+        const isSel = t.id === state.selectedTransportId;
+        return `
+          <div class="option-card ${isSel ? 'selected' : ''}" onclick="selectTransport('${t.id}')">
+            ${t.badge ? `<span class="option-badge ${t.badgeType}">${t.badge}</span>` : ''}
+            <div class="option-head">
+              <div class="option-icon">${t.icon}</div>
+              <div>
+                <div class="option-title">${t.name}</div>
+                <div class="option-sub">${t.sub}</div>
+              </div>
+            </div>
+            <div class="option-specs">
+              <div class="spec-item">
+                <span class="spec-label">片道所要時間</span>
+                <span class="spec-val">⏱️ ${t.duration}</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">運行頻度</span>
+                <span class="spec-val">🔄 ${t.freq}</span>
+              </div>
+            </div>
+            <div class="option-foot">
+              <div>
+                <span class="price-tag">¥${t.price.toLocaleString()}</span>
+                <span class="price-unit">/ 1名往復</span>
+              </div>
+              <span class="select-indicator">${isSel ? '✓ 選択中' : '選択する'}</span>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+
+    <div class="sub-heading">🚗 現地での二次交通・移動パス（1名あたり目安）</div>
+    <div class="options-grid">
+      ${dest.localTransports.map(lt => {
+        const isSel = lt.id === state.selectedLocalTransportId;
+        return `
+          <div class="option-card ${isSel ? 'selected' : ''}" onclick="selectLocalTransport('${lt.id}')">
+            <div class="option-head">
+              <div class="option-icon">🗺️</div>
+              <div>
+                <div class="option-title">${lt.name}</div>
+                <div class="option-sub">${lt.desc}</div>
+              </div>
+            </div>
+            <div class="option-foot">
+              <div>
+                <span class="price-tag">¥${lt.price.toLocaleString()}</span>
+                <span class="price-unit">/ 1名あたり</span>
+              </div>
+              <span class="select-indicator">${isSel ? '✓ 選択中' : '選択する'}</span>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+
+    <div class="step-nav-footer">
+      <button class="btn-outline" onclick="goToStep(1)">← 目的地選択へ戻る</button>
+      <button class="btn-primary" onclick="goToStep(3)">宿泊先の選択へ進む →</button>
+    </div>
+  `;
+}
+
+function selectTransport(id) {
+  state.selectedTransportId = id;
+  updateSummary();
+  renderStep();
+}
+
+function selectLocalTransport(id) {
+  state.selectedLocalTransportId = id;
+  updateSummary();
+  renderStep();
+}
+
+// STEP 3: Accommodation
+function renderStep3Hotel(container, dest) {
+  const nights = state.nights;
+  container.innerHTML = `
+    <div class="section-banner">
+      <div>
+        <h2>🏨 Step 3. 「${dest.name}」の宿泊先を選ぶ（${nights === 0 ? '日帰り設定中' : nights + '泊'}）</h2>
+        <p>温泉旅館・ラグジュアリーホテル・高コスパ宿から、旅のスタイルにぴったりの滞在先を選びましょう。</p>
+      </div>
+      <button class="btn-primary" onclick="goToStep(4)">次へ：観光プランを選ぶ →</button>
+    </div>
+
+    ${nights === 0 ? `
+      <div style="background:var(--amber-light);border:1px solid var(--amber);padding:16px;border-radius:12px;margin-bottom:18px;font-weight:600;">
+        ☀️ 現在「日帰り（0泊1日）」が選択されています。宿泊を伴う場合は上部の「泊数・日程」から1泊以上に変更してください。
+      </div>
+    ` : ''}
+
+    <div class="options-grid">
+      ${dest.hotels.map(h => {
+        const isSel = h.id === state.selectedHotelId;
+        return `
+          <div class="option-card ${isSel ? 'selected' : ''}" onclick="selectHotel('${h.id}')">
+            ${h.badge ? `<span class="option-badge">${h.badge}</span>` : ''}
+            <div class="option-head">
+              <div class="option-icon">${h.icon}</div>
+              <div>
+                <div class="option-title">${h.name}</div>
+                <div class="option-sub">📍 ${h.area} ｜ <span style="color:#d97706;font-weight:700;">${h.rating}</span></div>
+              </div>
+            </div>
+            <div style="font-size:12.5px;font-weight:600;color:var(--primary-dark);background:var(--primary-light);padding:6px 10px;border-radius:8px;">
+              🍽️ ${h.meal}
+            </div>
+            <div class="dest-tags">
+              ${h.features.map(f => `<span class="tag">✓ ${f}</span>`).join('')}
+            </div>
+            <div class="option-foot">
+              <div>
+                <span class="price-tag">¥${h.pricePerNight.toLocaleString()}</span>
+                <span class="price-unit">/ 1名1泊</span>
+              </div>
+              <span class="select-indicator">${isSel ? '✓ 選択中' : 'この宿にする'}</span>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+
+    <div class="step-nav-footer">
+      <button class="btn-outline" onclick="goToStep(2)">← 交通手段へ戻る</button>
+      <button class="btn-primary" onclick="goToStep(4)">観光プランの選択へ進む →</button>
+    </div>
+  `;
+}
+
+function selectHotel(id) {
+  state.selectedHotelId = id;
+  updateSummary();
+  renderStep();
+}
+
+// STEP 4: Sightseeing & Courses
+function renderStep4Sightseeing(container, dest) {
+  const totalDays = Math.max(1, state.nights + 1);
+  const selectedIds = new Set(state.selectedSpots.map(s => s.id));
+
+  container.innerHTML = `
+    <div class="section-banner">
+      <div>
+        <h2>🗺️ Step 4. 観光プラン・モデルコースを選ぶ</h2>
+        <p>おすすめモデルコースで一括セットするか、気になる観光スポット・グルメ・体験を自由にカスタマイズできます。</p>
+      </div>
+      <button class="btn-primary" onclick="goToStep(5)">完成！旅のしおりを見る →</button>
+    </div>
+
+    <div class="sub-heading">✨ ワンクリックで適用できる「おすすめモデルコース」</div>
+    <div class="course-grid">
+      ${dest.courses.map(c => {
+        const isAct = c.id === state.selectedCourseId;
+        return `
+          <div class="course-card ${isAct ? 'active' : ''}" onclick="applyModelCourse('${c.id}')">
+            <div style="font-weight:800;font-size:15px;margin-bottom:4px;">${c.name}</div>
+            <div style="font-size:12.5px;color:var(--text-sub);margin-bottom:10px;">${c.desc}</div>
+            <span style="font-size:12px;font-weight:700;color:var(--accent);">
+              ${isAct ? '✓ 適用中コース' : 'このモデルコースを適用 →'}
+            </span>
+          </div>
+        `;
+      }).join('')}
+    </div>
+
+    <div class="sub-heading">📍 スポット・グルメ・体験の個別カスタマイズ（クリックでON/OFF・日程変更）</div>
+    <div class="options-grid">
+      ${dest.spots.map(sp => {
+        const selObj = state.selectedSpots.find(s => s.id === sp.id);
+        const isSel = Boolean(selObj);
+        const assignedDay = selObj ? selObj.day : Math.min(sp.day, totalDays);
+        return `
+          <div class="spot-card ${isSel ? 'selected' : ''}">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+              <span class="tag" style="background:var(--primary-light);color:var(--primary-dark);">${sp.category}</span>
+              <span style="font-size:12px;color:var(--text-sub);">🕒 目安 ${sp.duration}</span>
+            </div>
+            <div style="font-size:15.5px;font-weight:800;">${sp.name}</div>
+            <div style="font-size:12.5px;color:var(--text-sub);">${sp.desc}</div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:10px;border-top:1px dashed var(--border);">
+              <div class="day-selector">
+                ${Array.from({ length: totalDays }, (_, i) => i + 1).map(dNum => `
+                  <button class="day-chip ${isSel && assignedDay === dNum ? 'active' : ''}"
+                    onclick="assignSpotToDay('${sp.id}', ${dNum})">Day ${dNum}</button>
+                `).join('')}
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <strong style="font-size:14px;color:var(--text);">${sp.price === 0 ? '無料' : '¥' + sp.price.toLocaleString()}</strong>
+                <button class="btn-outline" style="padding:5px 12px;" onclick="toggleSpot('${sp.id}')">
+                  ${isSel ? '✓ 追加済' : '＋ 追加'}
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+
+    <div class="custom-add-box">
+      <span style="font-weight:700;font-size:13px;">➕ 行きたいスポット・お店を自由追加：</span>
+      <input type="text" id="newSpotName" class="config-input" style="max-width:210px;" placeholder="スポット・店名">
+      <input type="time" id="newSpotTime" class="config-input" style="max-width:120px;" value="13:00">
+      <input type="number" id="newSpotPrice" class="config-input" style="max-width:130px;" placeholder="予算(円)" value="2000">
+      <button class="btn-outline" onclick="addCustomSpot()">＋ プランに追加</button>
+    </div>
+
+    <div class="step-nav-footer">
+      <button class="btn-outline" onclick="goToStep(3)">← 宿泊先へ戻る</button>
+      <button class="btn-primary" onclick="goToStep(5)">完成した「旅のしおり」を見る →</button>
+    </div>
+  `;
+}
+
+function applyModelCourse(courseId) {
+  const dest = getCurrentDest();
+  const course = dest.courses.find(c => c.id === courseId);
+  if (!course) return;
+  state.selectedCourseId = courseId;
+  const totalDays = Math.max(1, state.nights + 1);
+  state.selectedSpots = dest.spots
+    .filter(s => course.spotIds.includes(s.id))
+    .map(s => ({ ...s, day: Math.min(s.day, totalDays) }));
+  updateSummary();
+  renderStep();
+  showToast(`✨ 「${course.name}」を適用しました`);
+}
+
+function toggleSpot(spotId) {
+  const dest = getCurrentDest();
+  const idx = state.selectedSpots.findIndex(s => s.id === spotId);
+  if (idx >= 0) {
+    state.selectedSpots.splice(idx, 1);
+  } else {
+    const sp = dest.spots.find(s => s.id === spotId);
+    if (sp) {
+      const totalDays = Math.max(1, state.nights + 1);
+      state.selectedSpots.push({ ...sp, day: Math.min(sp.day, totalDays) });
+    }
+  }
+  updateSummary();
+  renderStep();
+}
+
+function assignSpotToDay(spotId, dayNum) {
+  const dest = getCurrentDest();
+  const existing = state.selectedSpots.find(s => s.id === spotId);
+  if (existing) {
+    existing.day = dayNum;
+  } else {
+    const sp = dest.spots.find(s => s.id === spotId);
+    if (sp) state.selectedSpots.push({ ...sp, day: dayNum });
+  }
+  updateSummary();
+  renderStep();
+}
+
+function addCustomSpot() {
+  const name = document.getElementById('newSpotName').value.trim();
+  const time = document.getElementById('newSpotTime').value || '13:00';
+  const price = parseInt(document.getElementById('newSpotPrice').value, 10) || 0;
+  if (!name) {
+    showToast('スポット名を入力してください');
+    return;
+  }
+  const dest = getCurrentDest();
+  const newSp = {
+    id: 'custom-' + Date.now(),
+    day: 1,
+    time,
+    category: 'カスタム追加',
+    name,
+    duration: '60分',
+    price,
+    desc: 'オリジナル追加スポット'
+  };
+  dest.spots.push(newSp);
+  state.selectedSpots.push({ ...newSp });
+  updateSummary();
+  renderStep();
+  showToast(`「${name}」を追加しました！`);
+}
+
+function addCustomDestination() {
+  const name = document.getElementById('customDestName').value.trim();
+  const catchText = document.getElementById('customDestCatch').value.trim() || '自分だけのオリジナル旅行プラン';
+  if (!name) {
+    showToast('目的地名を入力してください');
+    return;
+  }
+  const id = 'custom-dest-' + Date.now();
+  const newDest = {
+    id,
+    name,
+    region: 'カスタム',
+    emoji: '🌟',
+    catch: catchText,
+    tags: ['オリジナル旅', 'グルメ満喫', '絶景・自然'],
+    gradient: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #ec4899 100%)',
+    image: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=80',
+    bestSeason: '通年',
+    avgBudget: 'カスタム',
+    transports: [
+      { id: id + '-t1', icon: '🚄', name: '特急・新幹線 往復', sub: '快適アクセス', duration: '約2時間', freq: '随時', price: 22000, badge: 'おすすめ', badgeType: 'rec' },
+      { id: id + '-t2', icon: '✈️', name: '飛行機 往復', sub: '遠方アクセス', duration: '約1時間30分', freq: '随時', price: 28000, badge: '', badgeType: '' },
+      { id: id + '-t3', icon: '🚗', name: 'マイカー・レンタカードライブ（高速・ガソリン代）', sub: '自由気ままなドライブ旅', duration: '自由', freq: '随時', price: 9000, badge: 'コスパ', badgeType: 'cheap' }
+    ],
+    localTransports: [
+      { id: id + '-lt1', name: '現地レンタカー / フリーパス', price: 4500, desc: '現地での自由移動' }
+    ],
+    hotels: [
+      { id: id + '-h1', icon: '♨️', name: name + ' ラグジュアリー温泉リゾート', area: '中心・温泉エリア', meal: '1泊2食付（特選ディナー）', rating: '★ 4.8', pricePerNight: 26000, features: ['露天風呂', '地元食材ディナー'], badge: '贅沢滞在' },
+      { id: id + '-h2', icon: '🏨', name: name + ' グランドホテル', area: '駅前・観光中心エリア', meal: '朝食ビュッフェ付', rating: '★ 4.6', pricePerNight: 15000, features: ['好立地', '快適ステイ'], badge: '人気' }
+    ],
+    courses: [
+      { id: id + '-c1', name: '🌟 ' + name + ' 満喫モデルコース', desc: '名所観光とご当地グルメを楽しむ基本コース', spotIds: [id + '-s1', id + '-s2', id + '-s3'] }
+    ],
+    spots: [
+      { id: id + '-s1', day: 1, time: '11:30', category: 'グルメ', name: name + ' ご当地名物ランチ', duration: '90分', price: 3000, desc: '旬の地元食材を味わうランチ' },
+      { id: id + '-s2', day: 1, time: '14:30', category: '名所・絶景', name: name + ' 代表ランドマーク観光', duration: '120分', price: 1500, desc: '外せない定番スポット巡り' },
+      { id: id + '-s3', day: 2, time: '10:30', category: '体験・買物', name: name + ' カフェ＆お土産散策', duration: '120分', price: 2500, desc: '人気カフェと特産品ショッピング' }
+    ]
+  };
+  DESTINATIONS.unshift(newDest);
+  selectDestination(id, true);
+}
+
+// STEP 5: Final Itinerary & Budget Breakdown
+function renderStep5Itinerary(container, dest) {
+  const totalDays = Math.max(1, state.nights + 1);
+  const transport = dest.transports.find(t => t.id === state.selectedTransportId) || dest.transports[0];
+  const localTrans = dest.localTransports.find(lt => lt.id === state.selectedLocalTransportId) || dest.localTransports[0];
+  const hotel = dest.hotels.find(h => h.id === state.selectedHotelId) || dest.hotels[0];
+
+  let daysHtml = '';
+  for (let d = 1; d <= totalDays; d++) {
+    const daySpots = state.selectedSpots
+      .filter(s => (s.day || 1) === d)
+      .sort((a, b) => (a.time || '12:00').localeCompare(b.time || '12:00'));
+
+    let dateLabel = `Day ${d}`;
+    if (state.departDate) {
+      const dt = new Date(state.departDate);
+      dt.setDate(dt.getDate() + (d - 1));
+      dateLabel = `Day ${d} （${dt.getMonth() + 1}/${dt.getDate()}）`;
+    }
+
+    daysHtml += `
+      <div class="timeline-day">
+        <div class="timeline-day-header">
+          <span class="day-badge">${dateLabel}</span>
+          <span style="font-size:12.5px;color:var(--text-sub);font-weight:600;">
+            ${d === 1 ? `出発：${state.origin} → ${dest.name}` : d === totalDays ? `最終日：${dest.name} → ${state.origin}` : `${dest.name} 終日観光`}
+          </span>
+        </div>
+        <div class="timeline-list">
+          ${d === 1 ? `
+            <div class="timeline-node">
+              <div>
+                <div style="font-size:11.5px;color:var(--primary-dark);font-weight:700;">08:30 出発・移動</div>
+                <div style="font-weight:700;">${transport.icon} ${transport.name}（${state.origin}発）</div>
+                <div style="font-size:12px;color:var(--text-sub);">所要時間：${transport.duration} ／ 現地移動：${localTrans.name}</div>
+              </div>
+              <span class="tag">移動</span>
+            </div>
+          ` : ''}
+
+          ${daySpots.length > 0 ? daySpots.map(sp => `
+            <div class="timeline-node">
+              <div>
+                <div style="font-size:11.5px;color:var(--emerald);font-weight:700;">${sp.time || '13:00'} （目安 ${sp.duration}）</div>
+                <div style="font-weight:700;">📍 ${sp.name}</div>
+                <div style="font-size:12px;color:var(--text-sub);">${sp.desc}</div>
+              </div>
+              <div style="text-align:right;">
+                <span class="tag">${sp.category}</span>
+                <div style="font-size:12.5px;font-weight:700;margin-top:4px;">${sp.price === 0 ? '無料' : '¥' + sp.price.toLocaleString()}</div>
+              </div>
+            </div>
+          `).join('') : `
+            <div class="timeline-node">
+              <div style="color:var(--text-sub);font-size:13px;">自由行動・ゆったり滞在（Step 4で観光スポットを追加できます）</div>
+            </div>
+          `}
+
+          ${d <= state.nights ? `
+            <div class="timeline-node" style="background:var(--primary-light);border-color:#bae6fd;">
+              <div>
+                <div style="font-size:11.5px;color:var(--primary-dark);font-weight:700;">17:30 チェックイン・ご宿泊</div>
+                <div style="font-weight:700;">${hotel.icon} ${hotel.name}</div>
+                <div style="font-size:12px;color:var(--text-sub);">${hotel.meal} ｜ ${hotel.area}</div>
+              </div>
+              <span class="tag" style="background:#fff;">宿泊</span>
+            </div>
+          ` : `
+            <div class="timeline-node">
+              <div>
+                <div style="font-size:11.5px;color:var(--primary-dark);font-weight:700;">18:00 帰路</div>
+                <div style="font-weight:700;">${transport.icon} ${dest.name} 出発 → ${state.origin} 帰着</div>
+              </div>
+              <span class="tag">帰着</span>
+            </div>
+          `}
+        </div>
+      </div>
+    `;
+  }
+
+  container.innerHTML = `
+    <div class="section-banner">
+      <div>
+        <h2>📖 Step 5. 完成した「旅のしおり」＆ 行程表</h2>
+        <p>${dest.emoji} ${dest.name}（${state.nights === 0 ? '日帰り' : state.nights + '泊' + (state.nights + 1) + '日'}・大人${state.adults}名）のオリジナル旅行プランです。</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn-outline" style="background:rgba(255,255,255,0.15);color:#fff;border-color:rgba(255,255,255,0.3);" onclick="copyShareText()">📋 LINE・メール用にコピー</button>
+        <button class="btn-primary" onclick="window.print()">🖨️ PDF・印刷する</button>
+      </div>
+    </div>
+
+    ${daysHtml}
+
+    <div class="step-nav-footer">
+      <button class="btn-outline" onclick="goToStep(4)">← 観光プランの編集へ戻る</button>
+      <button class="btn-primary" onclick="saveCurrentPlan()">💾 このプランを保存する</button>
+    </div>
+  `;
+}
+
+// ==========================================
+// Live Summary & Budget Calculation
+// ==========================================
+function updateSummary() {
+  const dest = getCurrentDest();
+  const transport = dest.transports.find(t => t.id === state.selectedTransportId) || dest.transports[0];
+  const localTrans = dest.localTransports.find(lt => lt.id === state.selectedLocalTransportId) || dest.localTransports[0];
+  const hotel = dest.hotels.find(h => h.id === state.selectedHotelId) || dest.hotels[0];
+
+  const nightsLabel = state.nights === 0 ? '日帰り' : `${state.nights}泊${state.nights + 1}日`;
+  document.getElementById('summaryDaysBadge').textContent = nightsLabel;
+  document.getElementById('summaryDestName').textContent = `${dest.emoji} ${dest.name}`;
+  document.getElementById('summaryRouteText').textContent = `${state.origin}発 ・ 大人${state.adults}名 ・ ${state.departDate || '日程未定'}`;
+
+  const transPerPerson = transport ? transport.price : 0;
+  const localPerPerson = localTrans ? localTrans.price : 0;
+  const hotelPerPerson = hotel ? hotel.pricePerNight * state.nights : 0;
+  const spotsPerPerson = state.selectedSpots.reduce((acc, s) => acc + (s.price || 0), 0);
+
+  const perPersonTotal = transPerPerson + localPerPerson + hotelPerPerson + spotsPerPerson;
+  const grandTotal = perPersonTotal * state.adults;
+
+  document.getElementById('sumTransportName').textContent = transport ? `${transport.icon} ${transport.name}` : '未選択';
+  document.getElementById('sumTransportPrice').textContent = `¥${(transPerPerson * state.adults).toLocaleString()}`;
+
+  document.getElementById('sumLocalTransportName').textContent = localTrans ? `現地: ${localTrans.name}` : '';
+  document.getElementById('sumLocalTransportPrice').textContent = `¥${(localPerPerson * state.adults).toLocaleString()}`;
+
+  if (state.nights === 0) {
+    document.getElementById('sumHotelName').textContent = '日帰り（宿泊なし）';
+    document.getElementById('sumHotelPrice').textContent = '¥0';
+    document.getElementById('sumHotelSub').textContent = '';
+  } else {
+    document.getElementById('sumHotelName').textContent = hotel ? `${hotel.icon} ${hotel.name}` : '未選択';
+    document.getElementById('sumHotelPrice').textContent = `¥${(hotelPerPerson * state.adults).toLocaleString()}`;
+    document.getElementById('sumHotelSub').textContent = `¥${hotel.pricePerNight.toLocaleString()} × ${state.nights}泊 × ${state.adults}名`;
+  }
+
+  const spotsContainer = document.getElementById('sumSpotsList');
+  if (state.selectedSpots.length === 0) {
+    spotsContainer.innerHTML = `<div style="font-size:12px;color:var(--text-muted);">スポット未選択</div>`;
+  } else {
+    spotsContainer.innerHTML = state.selectedSpots.map(s => `
+      <div class="summary-item-row" style="font-size:12px;">
+        <span style="color:var(--text-sub);">[Day${s.day || 1}] ${s.name}</span>
+        <span style="font-weight:600;">¥${((s.price || 0) * state.adults).toLocaleString()}</span>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('sumTotalAmount').textContent = `¥${grandTotal.toLocaleString()}`;
+  document.getElementById('sumPerPersonAmount').textContent = `¥${perPersonTotal.toLocaleString()} / 人`;
+}
+
+// ==========================================
+// Save / Load / Share Helpers
+// ==========================================
+function saveCurrentPlan() {
+  const dest = getCurrentDest();
+  const saved = JSON.parse(localStorage.getItem('voyage_saved_plans') || '[]');
+  const entry = {
+    id: 'plan-' + Date.now(),
+    savedAt: new Date().toLocaleString('ja-JP'),
+    title: `${dest.emoji} ${dest.name}（${state.nights === 0 ? '日帰り' : state.nights + '泊' + (state.nights + 1) + '日'}）`,
+    totalText: document.getElementById('sumTotalAmount').textContent,
+    stateSnapshot: JSON.parse(JSON.stringify(state))
+  };
+  saved.unshift(entry);
+  localStorage.setItem('voyage_saved_plans', JSON.stringify(saved.slice(0, 20)));
+  showToast('💾 現在の旅行プランを保存しました！');
+}
+
+function openSavedModal() {
+  const saved = JSON.parse(localStorage.getItem('voyage_saved_plans') || '[]');
+  const box = document.getElementById('savedPlansContainer');
+  if (saved.length === 0) {
+    box.innerHTML = `<p style="color:var(--text-sub);font-size:13.5px;padding:16px 0;">まだ保存されたプランはありません。右上の「💾 保存」ボタンからいつでも保存できます。</p>`;
+  } else {
+    box.innerHTML = saved.map(item => `
+      <div style="border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;justify-content:space-between;align-items:center;gap:12px;">
+        <div>
+          <div style="font-weight:800;font-size:15px;">${item.title}</div>
+          <div style="font-size:12px;color:var(--text-sub);">保存日時: ${item.savedAt} ｜ 概算合計: <strong>${item.totalText}</strong></div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn-outline" onclick="loadSavedPlan('${item.id}')">読み込む</button>
+          <button class="btn-outline" style="color:var(--rose);" onclick="deleteSavedPlan('${item.id}')">削除</button>
+        </div>
+      </div>
+    `).join('');
+  }
+  document.getElementById('savedModal').classList.add('open');
+}
+
+function closeSavedModal() {
+  document.getElementById('savedModal').classList.remove('open');
+}
+
+function loadSavedPlan(planId) {
+  const saved = JSON.parse(localStorage.getItem('voyage_saved_plans') || '[]');
+  const found = saved.find(p => p.id === planId);
+  if (!found) return;
+  state = { ...found.stateSnapshot };
+  document.getElementById('originSelect').value = state.origin;
+  document.getElementById('departDate').value = state.departDate;
+  document.getElementById('nightsSelect').value = String(state.nights);
+  document.getElementById('adultsSelect').value = String(state.adults);
+  document.getElementById('styleSelect').value = state.style;
+  closeSavedModal();
+  updateSummary();
+  goToStep(state.currentStep || 5);
+  showToast('📂 保存済みプランを読み込みました');
+}
+
+function deleteSavedPlan(planId) {
+  const saved = JSON.parse(localStorage.getItem('voyage_saved_plans') || '[]').filter(p => p.id !== planId);
+  localStorage.setItem('voyage_saved_plans', JSON.stringify(saved));
+  openSavedModal();
+}
+
+function copyShareText() {
+  const dest = getCurrentDest();
+  const transport = dest.transports.find(t => t.id === state.selectedTransportId) || dest.transports[0];
+  const hotel = dest.hotels.find(h => h.id === state.selectedHotelId) || dest.hotels[0];
+  const lines = [
+    `【${dest.emoji} ${dest.name} 旅行プラン】`,
+    `📅 日程: ${state.departDate || '未定'} から ${state.nights === 0 ? '日帰り' : state.nights + '泊' + (state.nights + 1) + '日'}（大人${state.adults}名）`,
+    `🚄 交通: ${transport.name}（${state.origin}発）`,
+    `🏨 宿泊: ${state.nights === 0 ? '日帰り' : hotel.name + '（' + hotel.meal + '）'}`,
+    `🗺️ 観光スポット:`,
+    ...state.selectedSpots.map(s => `  ・[Day${s.day || 1} ${s.time || ''}] ${s.name}`),
+    `💰 概算予算: 全員合計 ${document.getElementById('sumTotalAmount').textContent}（1名あたり ${document.getElementById('sumPerPersonAmount').textContent}）`
+  ];
+  const text = lines.join('\n');
+  const done = () => showToast('📋 旅行プランをコピーしました！LINEに貼り付けてください');
+  const fail = () => { if (__copyFallback(text)) done(); else { window.prompt('下の文章を長押ししてコピーしてください', text); } };
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, fail); else fail();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toastMsg');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ==========================================
+// Boot
+// ==========================================
+initDefaultDate();
+selectDestination('kyoto', false);
+</script>
+</body>
+</html>
+
